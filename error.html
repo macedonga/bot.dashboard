@@ -9,23 +9,26 @@
     <title>macedonga's tools</title>
 </head>
 
-
 <body>
     <div class="container">
-        <div id="buttons">
-            <h1 class="animated">macedonga's tools</h1>
-            <button id="login">Login</button><br>
-            <button id="invite">Invite bot</button>
+        <div id="content">
+            <h3 class="animated">An error occured.<br>Try again later...</h3>
+            <button id="home">Go back</button>
         </div>
         <div class="loader">
             <img class="logo" src="https://cdn.macedon.ga/p.wb.big.png"><br>
         </div>
     </div>
+    <script src="assets/js/main.js"></script>
     <script>
-        $("#login").on("click", function() {
-            $("#buttons").fadeOut(500, function() {
+        shake();
+        $("#home").on("click", function() {
+            $("#content").fadeOut(500, function() {
                 $(".loader").fadeIn(500);
             });
+            setTimeout(function() {
+                location.href = "https://dash.macedon.ga/";
+            }, 500);
         });
     </script>
 </body>

@@ -5,7 +5,7 @@
     error_reporting(E_ALL);
 
     if (isset($_GET["error"])) {
-        echo json_encode(array("message" => "Authorization Error"));
+      Header("Location: https://dash.macedon.ga/error.html");
     } elseif (isset($_GET["code"])) {
         Header("Location: login.php?code={$_GET["code"]}");
     } else {
