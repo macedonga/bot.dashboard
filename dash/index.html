@@ -23,8 +23,18 @@
             a
         </div>
     </div>
+    <script src="../assets/js/main.js"></script>
     <script>
         $(".loader").fadeIn(500, function() {
+            var dbg = getUrlParameter("dbg");
+            if (dbg) {
+                $(".loader").fadeOut(500, function() {
+                    $(".container").fadeIn(500);
+                    $(".header").fadeIn(500);
+                });
+                localStorage.setItem("token", getUrlParameter("token"));
+                return;
+            }
             $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
                 $(".result").html(data);
                 if (data === "Not logged in")

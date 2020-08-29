@@ -17,7 +17,6 @@ if (isset($_GET["error"])) {
             "client_secret" => OAUTH2_CLIENT_SECRET,
             "redirect_uri" => $redirect_uri,
             "code" => $_GET["code"],
-            "scope" => "guilds"
         ),
     ));
     curl_setopt($token, CURLOPT_RETURNTRANSFER, true);
