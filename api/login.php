@@ -1,11 +1,11 @@
 <?php
 define('OAUTH2_CLIENT_ID', '747489983601836042');
 define('OAUTH2_CLIENT_SECRET', $_ENV["CS"]);
+session_start();
 
 if (isset($_GET["error"])) {
     Header("Location: https://dash.macedon.ga/error.html");
 } elseif (isset($_GET["code"])) {
-    session_start();
     $redirect_uri = "https://dash.macedon.ga/dash/index.html";
     $token_request = "https://discordapp.com/api/oauth2/token";
     $token = curl_init();
