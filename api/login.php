@@ -1,7 +1,7 @@
 <?php
+session_start();
 define('OAUTH2_CLIENT_ID', '747489983601836042');
 define('OAUTH2_CLIENT_SECRET', $_ENV["CS"]);
-session_start();
 
 if (isset($_GET["error"])) {
     Header("Location: https://dash.macedon.ga/error.html");
@@ -26,7 +26,9 @@ if (isset($_GET["error"])) {
     if (isset($resp->access_token)) {
         $access_token = $resp->access_token;
         $_SESSION['at'] = $access_token;
-        Header("Location: https://dash.macedon.ga/dash");
+        echo $_SESSION['at'];
+        echo $access_token;
+        //("Location: https://dash.macedon.ga/dash");
     } else {
         Header("Location: https://dash.macedon.ga/error.html");
     }
