@@ -9,7 +9,7 @@
     } elseif (isset($_GET["code"])) {
         Header("Location: login.php?code={$_GET["code"]}");
     } else {
-        echo json_encode(array("message" => "No Code Provided"));
+      Header("Location: https://discordapp.com/oauth2/authorize?client_id=747489983601836042&response_type=code&scope=identify");
     }
 
 ?>
