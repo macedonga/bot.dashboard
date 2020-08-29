@@ -11,38 +11,42 @@
 
 <body>
     <div class="header">
-        <h1 class="animated">macedonga's tools</h1>
-        <a href="https://dash.macedon.ga/api/logout.php" class="animated">Logout</a>
+        <h1 id="u-n" class="animated">username</h1>
+        <a href="https://dash.macedon.ga/api/logout.php" class="animated">
+            <img class="u-a">
+        </a>
     </div>
+
 
     <div class="container">
         <div class="loader">
             <img class="logo" src="https://cdn.macedon.ga/p.wb.big.png"><br>
         </div>
         <div class="content">
-            a
         </div>
     </div>
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/dash.js"></script>
     <script>
         $(".loader").fadeIn(500, function() {
             var dbg = getUrlParameter("dbg");
             if (dbg) {
                 $(".loader").fadeOut(500, function() {
-                    $(".container").fadeIn(500);
+                    $(".content").fadeIn(500);
                     $(".header").fadeIn(500);
                 });
                 localStorage.setItem("token", getUrlParameter("token"));
                 return;
             }
             $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
-                $(".result").html(data);
                 if (data === "Not logged in")
                     location.href = "https://dash.macedon.ga/api/oauth.php";
                 else {
                     $(".loader").fadeOut(500, function() {
-                        $(".container").fadeIn(500);
-                        $(".header").fadeIn(500);
+                        setTimeout(500, function() {
+                            $(".content").fadeIn(500);
+                            $(".header").fadeIn(500);
+                        });
                     });
                 }
             });
