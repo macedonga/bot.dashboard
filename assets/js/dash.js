@@ -13,10 +13,8 @@ function getToken() {
 
 $(document).ready(function() {
     var token = getToken();
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
     $.get({
-        url: proxyurl + "https://discordapp.com/api/users/@me",
+        url: "https://discordapp.com/api/users/@me",
         headers: {
             "Authorization": "Bearer " + token,
             crossDomain: true
@@ -26,7 +24,7 @@ $(document).ready(function() {
         $("#u-n").text("Hello " + data.username + "!");
     });
     $.get({
-        url: proxyurl + "https://discordapp.com/api/users/@me/guilds",
+        url: "https://discordapp.com/api/users/@me/guilds",
         headers: {
             "Authorization": "Bearer " + token,
             crossDomain: true
