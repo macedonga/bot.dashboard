@@ -14,36 +14,17 @@ $apiURLBase = 'https://discord.com/api/users/@me';
 
 session_start();
 
-if(get('action') == 'login') {
-  $params = array(
-    'client_id' => OAUTH2_CLIENT_ID,
-    'redirect_uri' => 'https://dash.macedon.ga/api/login.php',
-    'response_type' => 'code',
-    'scope' => 'identify guilds'
-  );
-  header('Location: https://discordapp.com/api/oauth2/authorize' . '?' . http_build_query($params));
-  die();
-}
-
-if(get('code')) {
-  $token = apiRequest($tokenURL, array(
-    "grant_type" => "authorization_code",
-    'client_id' => OAUTH2_CLIENT_ID,
-    'client_secret' => OAUTH2_CLIENT_SECRET,
-    'redirect_uri' => 'https://dash.macedon.ga/dashboard/index.php',
-    'code' => get('code')
-  ));
-  $logout_token = $token->access_token;
-  $_SESSION['access_token'] = $token->access_token;
-
-  header('Location: ' . $_SERVER['PHP_SELF']);
-}
-
 if(session('access_token')) {
-  header("location: https://dash.macedon.ga/dashboard/index.php");
+  $user = apiRequest($apiURLBase);
+
+  echo '<h3>Logged In</h3>';
+  echo '<h4>Welcome, ' . $user->username . '</h4>';
+  echo '<pre>';
+    print_r($user);
+  echo '</pre>';
+
 } else {
-  echo '<h3>Not logged in</h3>';
-  echo '<p><a href="?action=login">Log In</a></p>';
+    header("location: https://dash.macedon.ga/api/login.php");
 }
 
 function apiRequest($url, $post=FALSE, $headers=array()) {
@@ -52,6 +33,7 @@ function apiRequest($url, $post=FALSE, $headers=array()) {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
   $response = curl_exec($ch);
+
 
   if($post)
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
