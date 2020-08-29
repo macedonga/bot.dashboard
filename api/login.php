@@ -25,10 +25,8 @@ if (isset($_GET["error"])) {
     curl_close($token);
     if (isset($resp->access_token)) {
         $access_token = $resp->access_token;
-        $_SESSION['at'] = $access_token;
-        echo $_SESSION['at'];
-        echo $access_token;
-        //("Location: https://dash.macedon.ga/dash");
+        setcookie("at", $access_token);
+        ("Location: https://dash.macedon.ga/dash");
     } else {
         Header("Location: https://dash.macedon.ga/error.html");
     }
