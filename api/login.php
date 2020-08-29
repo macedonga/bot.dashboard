@@ -1,5 +1,4 @@
 <?php
-session_start();
 define('OAUTH2_CLIENT_ID', '747489983601836042');
 define('OAUTH2_CLIENT_SECRET', $_ENV["CS"]);
 
