@@ -22,6 +22,16 @@
         </div>
     </div>
     <script>
+        $(".header").css("display", "none");
+        $(".container").fadeIn(500, function() {
+            $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
+                $(".result").html(data);
+                if (data === "Not logged in")
+                    location.href = "https://dash.macedon.ga/api/oauth.php";
+                else
+                    $(".header").fadeOut(500);
+            });
+        });
     </script>
 </body>
 
