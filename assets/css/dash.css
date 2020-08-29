@@ -1,7 +1,176 @@
 .header {
+    display: none;
     padding: 10px;
 }
 
 .header h1 {
     margin: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+body {
+    color: white;
+    background-color: black;
+    font-family: 'Roboto', sans-serif;
+    display: block;
+}
+
+.container {
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content {
+    display: none;
+}
+
+.shake {
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+.animated {
+    animation: animated-text 2s linear infinite;
+}
+
+button {
+    background-color: black;
+    padding: 10px;
+    margin-top: 10px;
+    animation: animated-text-border 2s linear infinite;
+    width: 15em;
+}
+
+button:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+.logo {
+    max-width: 150px;
+    border-radius: 150px;
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        max-width: 150px;
+        border-radius: 150px;
+        -webkit-box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+        -moz-box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+        -o-box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+        box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+    }
+    50% {
+        max-width: 155px;
+        border-radius: 155px;
+        -webkit-box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
+        -moz-box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
+        -o-box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
+        box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
+    }
+    100% {
+        max-width: 150px;
+        border-radius: 150px;
+        -webkit-box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+        -moz-box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+        -o-box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+        box-shadow: 0px 0px 0px 0px rgb(30, 30, 30);
+    }
+}
+
+button:active {
+    background-color: rgb(30, 30, 30);
+}
+
+@keyframes animated-text {
+    0% {
+        color: rgb(0, 132, 255);
+    }
+    25% {
+        color: rgb(255, 251, 0);
+    }
+    50% {
+        color: rgb(0, 216, 0);
+    }
+    75% {
+        color: rgb(255, 81, 0);
+    }
+    100% {
+        color: rgb(0, 132, 255);
+    }
+}
+
+@keyframes animated-text-border {
+    0% {
+        color: rgb(0, 132, 255);
+        border: solid 2px rgb(0, 132, 255);
+    }
+    25% {
+        color: rgb(255, 251, 0);
+        border: solid 2px rgb(255, 251, 0);
+    }
+    50% {
+        color: rgb(0, 216, 0);
+        border: solid 2px rgb(0, 216, 0);
+    }
+    75% {
+        color: rgb(255, 81, 0);
+        border: solid 2px rgb(255, 81, 0);
+    }
+    100% {
+        color: rgb(0, 132, 255);
+        border: solid 2px rgb(0, 132, 255);
+    }
+}
+
+#error {
+    text-align: center;
+    visibility: hidden;
+    display: block;
+    animation: error 1s linear infinite;
+}
+
+@keyframes error {
+    0% {
+        color: rgb(255, 255, 255)
+    }
+    50% {
+        color: rgb(255, 0, 0);
+    }
+}
+
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
 }

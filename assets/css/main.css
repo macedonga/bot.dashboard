@@ -36,15 +36,6 @@ body {
     animation: animated-text 2s linear infinite;
 }
 
-#shortify {
-    text-align: center;
-}
-
-#success {
-    text-align: center;
-    display: none;
-}
-
 button {
     background-color: black;
     padding: 10px;
@@ -96,10 +87,6 @@ button:hover {
 
 button:active {
     background-color: rgb(30, 30, 30);
-}
-
-#copy {
-    padding: 5px;
 }
 
 input {
