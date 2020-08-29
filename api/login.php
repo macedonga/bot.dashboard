@@ -18,6 +18,7 @@ if (isset($_GET["error"])) {
             "client_secret" => OAUTH2_CLIENT_SECRET,
             "redirect_uri" => $redirect_uri,
             "code" => $_GET["code"],
+            "scope" => "guilds"
         ),
     ));
     curl_setopt($token, CURLOPT_RETURNTRANSFER, true);
@@ -26,7 +27,7 @@ if (isset($_GET["error"])) {
     if (isset($resp->access_token)) {
         $access_token = $resp->access_token;
         setcookie("at", $access_token);
-        ("Location: https://dash.macedon.ga/dash");
+        Header("Location: https://dash.macedon.ga/dash");
     } else {
         Header("Location: https://dash.macedon.ga/error.html");
     }
