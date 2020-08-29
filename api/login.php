@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 if (isset($_GET["error"])) {
     echo json_encode(array("message" => "Authorization Error"));
 } elseif (isset($_GET["code"])) {
-    $redirect_uri = "your-request-URI-here";
+    $redirect_uri = "https://dash.macedon.ga/api/login.php";
     $token_request = "https://discordapp.com/api/oauth2/token";
     $token = curl_init();
     curl_setopt_array($token, array(
@@ -15,8 +15,8 @@ if (isset($_GET["error"])) {
         CURLOPT_POST => 1,
         CURLOPT_POSTFIELDS => array(
             "grant_type" => "authorization_code",
-            "client_id" => "",
-            "client_secret" => "",
+            "client_id" => OAUTH2_CLIENT_ID,
+            "client_secret" => OAUTH2_CLIENT_SECRET,
             "redirect_uri" => $redirect_uri,
             "code" => $_GET["code"]
         )
