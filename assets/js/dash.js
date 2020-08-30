@@ -12,7 +12,7 @@ $(document).ready(function() {
                 if (server.owner) {
                     var button = $("<button></button>").text(server.name).addClass("server").attr('id', server.id);
                     button.on("click", function() {
-                        var server = { id: server.id };
+                        var serverBTN = { id: server.id };
                         $.ajax({
                             url: "https://api.macedon.ga/mdbu/server/check",
                             type: "POST",
@@ -22,7 +22,7 @@ $(document).ready(function() {
                                 if (!response.connected)
                                     alert("The bot isn't in the server you selected.\nInvite it first and then you can select this server.")
                                 else
-                                    location.href = "https://dash.macedon.ga/dash/manage?sid=" + server.id;
+                                    location.href = "https://dash.macedon.ga/dash/manage.html?sid=" + server.id;
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.log(jqXHR);
@@ -31,14 +31,13 @@ $(document).ready(function() {
                             }
                         });
                     });
-                    $('.content').append(server);
+                    $('.content').append(serverBTN);
                     counter = counter + 1;
                 }
             });
         });
         if (counter === 0)
             $('.content').append($("<h1></h1>").text("You aren't owner of any server.\nCreate a server and then add the bot.").addClass("animated"));
-
     });
 
 });
