@@ -16,7 +16,8 @@ if(isset($_COOKIE["at"])) {
         CURLOPT_RETURNTRANSFER => true
     ));
 
+    $out = curl_exec($info);
     curl_close($info);
-    echo curl_exec($info);
+    echo $out;
 }
 echo "Not logged in";
