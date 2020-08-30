@@ -4,7 +4,7 @@ if(isset($_COOKIE["at"])) {
     if (isset($_GET["end"]))
         $info_request = "https://discordapp.com/api/users/@me/" . $_GET["end"];
     else
-        $info_request = "https://discordapp.com/api/users/@me/";
+        $info_request = "https://discordapp.com/api/users/@me";
 
     $info = curl_init();
     curl_setopt_array($info, array(
@@ -19,4 +19,6 @@ if(isset($_COOKIE["at"])) {
     curl_close($info);
     echo $out;
 }
-echo "Not logged in";
+else {
+    echo "Not logged in";
+}

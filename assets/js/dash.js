@@ -12,30 +12,12 @@ function getToken() {
 }
 
 $(document).ready(function() {
-    var token;
-    var dbg = getUrlParameter("dbg");
-    if (dbg)
-        token = localStorage.getItem("token");
-    else {
-        $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
-            if (data === "Not logged in")
-                location.href = "https://dash.macedon.ga/api/oauth.php";
-            else {
-                data;
-            }
-        });
-    }
-    $.get({
-        url: "https://dash.macedon.ga/api/discord.php",
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    }, function(data) {
+    $.get("https://dash.macedon.ga/api/discord.php", function(data) {
         $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + data.id + "/1faa3eed98189f795fda0674e9b96c29.png")
         $("#u-n").text("Hello " + data.username + "!");
     });
     $.get({
-        url: "https://discordapp.com/api/users/@me/guilds",
+        url: "https://dash.macedon.ga/api/discord.php?end=guilds",
         headers: {
             "Authorization": "Bearer " + token
         }
