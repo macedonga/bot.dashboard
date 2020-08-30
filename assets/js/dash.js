@@ -16,12 +16,7 @@ $(document).ready(function() {
         $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + data.id + "/1faa3eed98189f795fda0674e9b96c29.png")
         $("#u-n").text("Hello " + data.username + "!");
     });
-    $.get({
-        url: "https://dash.macedon.ga/api/discord.php?end=guilds",
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    }, function(data) {
+    $.get("https://dash.macedon.ga/api/discord.php?end=guilds", function(data) {
         data.forEach(element => {
             if (element.owner)
                 $('.content').append($("<button></button>").text(element.name).addClass("server"));
