@@ -5,7 +5,6 @@ if(isset($_COOKIE["at"])) {
         $info_request = "https://discordapp.com/api/users/@me/" . $_GET["end"];
     else
         $info_request = "https://discordapp.com/api/users/@me/";
-    echo $access_token . " " . $info_request;
 
     $info = curl_init();
     curl_setopt_array($info, array(
