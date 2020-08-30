@@ -31,10 +31,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.content {
-    display: none;
-}
-
 .shake {
     animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
     margin: 0;

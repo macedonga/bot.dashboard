@@ -11,19 +11,7 @@ $(document).ready(function() {
                 if (server.owner)
                     $('.content').append($("<button></button>").text(server.name).addClass("server"));
             });
-            showGUI();
         });
     });
 
 });
-
-function showGUI() {
-    $(".loader").fadeIn(500, function() {
-        $(".loader").fadeOut(500, function() {
-            setTimeout(500, function() {
-                $(".content").css("display", "block");
-                $(".header").css("display", "block");
-            });
-        });
-    });
-}
