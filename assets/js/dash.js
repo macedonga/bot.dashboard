@@ -19,6 +19,8 @@ $(document).ready(function() {
                             data: serverPost,
                             async: false,
                             success: function(response, textStatus, jqXHR) {
+                                console.log("response: " + response);
+                                console.log("textStatus: " + textStatus);
                                 if (!response.connected)
                                     alert("The bot isn't in the server you selected.\nInvite it first and then you can select this server.")
                                 else
@@ -36,8 +38,7 @@ $(document).ready(function() {
                 }
             });
         });
-        if (counter === 0)
-            $('.content').append($("<h1></h1>").text("You aren't owner of any server.\nCreate a server and then add the bot.").addClass("animated"));
+        console.log("Counter is: " + counter);
     });
 
 });
