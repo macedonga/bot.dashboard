@@ -12,29 +12,37 @@ function getToken() {
 }
 
 $(document).ready(function() {
-    $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
-        if (data === "Not logged in")
-            location.href = "https://dash.macedon.ga/api/oauth.php";
-
-        $.get({
-            url: "https://discordapp.com/api/users/@me",
-            headers: {
-                "Authorization": "Bearer " + data
+    var token;
+    var dbg = getUrlParameter("dbg");
+    if (dbg)
+        token = localStorage.getItem("token");
+    else {
+        $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
+            if (data === "Not logged in")
+                location.href = "https://dash.macedon.ga/api/oauth.php";
+            else {
+                data;
             }
-        }, function(data) {
-            $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + data.id + "/1faa3eed98189f795fda0674e9b96c29.png")
-            $("#u-n").text("Hello " + data.username + "!");
         });
-        $.get({
-            url: "https://discordapp.com/api/users/@me/guilds",
-            headers: {
-                "Authorization": "Bearer " + data
-            }
-        }, function(data) {
-            data.forEach(element => {
-                if (element.owner)
-                    $('.content').append($("<button></button>").text(element.name).addClass("server"));
-            });
+    }
+    $.get({
+        url: "https://dash.macedon.ga/api/discord.php",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }, function(data) {
+        $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + data.id + "/1faa3eed98189f795fda0674e9b96c29.png")
+        $("#u-n").text("Hello " + data.username + "!");
+    });
+    $.get({
+        url: "https://discordapp.com/api/users/@me/guilds",
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }, function(data) {
+        data.forEach(element => {
+            if (element.owner)
+                $('.content').append($("<button></button>").text(element.name).addClass("server"));
         });
     });
 });
