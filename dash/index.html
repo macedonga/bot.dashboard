@@ -27,31 +27,6 @@
     </div>
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/dash.js"></script>
-    <script>
-        $(".loader").fadeIn(500, function() {
-            var dbg = getUrlParameter("dbg");
-            if (dbg) {
-                $(".loader").fadeOut(500, function() {
-                    $(".content").fadeIn(500);
-                    $(".header").fadeIn(500);
-                });
-                localStorage.setItem("token", getUrlParameter("token"));
-                return;
-            }
-            $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
-                if (data === "Not logged in")
-                    location.href = "https://dash.macedon.ga/api/oauth.php";
-                else {
-                    $(".loader").fadeOut(500, function() {
-                        setTimeout(500, function() {
-                            $(".content").fadeIn(500);
-                            $(".header").fadeIn(500);
-                        });
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
