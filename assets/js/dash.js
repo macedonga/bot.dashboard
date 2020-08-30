@@ -19,8 +19,6 @@ $(document).ready(function() {
                             data: serverPost,
                             async: false,
                             success: function(response, textStatus, jqXHR) {
-                                console.log("response: " + response);
-                                console.log("textStatus: " + textStatus);
                                 if (!response.connected)
                                     alert("The bot isn't in the server you selected.\nInvite it first and then you can select this server.")
                                 else
@@ -38,7 +36,5 @@ $(document).ready(function() {
                 }
             });
         });
-        console.log("Counter is: " + counter);
     });
-
 });
