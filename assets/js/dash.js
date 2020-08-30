@@ -5,9 +5,9 @@ $(document).ready(function() {
         const ud = JSON.parse(data);
         $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
         $("#u-n").text("Hello " + ud.username + "!");
+        var counter = 0;
         $.get("https://dash.macedon.ga/api/discord.php?end=guilds", function(data) {
             const servers = JSON.parse(data);
-            var counter = 0;
             servers.forEach(server => {
                 if (server.owner) {
                     var button = $("<button></button>").text(server.name).addClass("server").attr('id', server.id);
