@@ -21,8 +21,8 @@ function showGUI() {
     $(".loader").fadeIn(500, function() {
         $(".loader").fadeOut(500, function() {
             setTimeout(500, function() {
-                $(".content").fadeIn(500);
-                $(".header").fadeIn(500);
+                $(".content").css("display", "block");
+                $(".header").css("display", "block");
             });
         });
     });
