@@ -15,8 +15,9 @@ $(document).ready(function() {
     $.get("https://dash.macedon.ga/api/discord.php", function(data) {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
-        $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + data.id + "/1faa3eed98189f795fda0674e9b96c29.png")
-        $("#u-n").text("Hello " + data.username + "!");
+        const ud = JSON.parse(data);
+        $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
+        $("#u-n").text("Hello " + ud.username + "!");
     });
     $.get("https://dash.macedon.ga/api/discord.php?end=guilds", function(data) {
         if (data === "Not logged in")
