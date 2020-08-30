@@ -10,13 +10,13 @@ $(document).ready(function() {
             const servers = JSON.parse(data);
             servers.forEach(server => {
                 if (server.owner) {
-                    var button = $("<button></button>").text(server.name).addClass("server").attr('id', server.id);
-                    button.on("click", function() {
-                        var serverBTN = { id: server.id };
+                    var serverBTN = $("<button></button>").text(server.name).addClass("server").attr('id', server.id);
+                    serverBTN.on("click", function() {
+                        var serverPost = { id: server.id };
                         $.ajax({
                             url: "https://api.macedon.ga/mdbu/server/check",
                             type: "POST",
-                            data: server,
+                            data: serverPost,
                             async: false,
                             success: function(response, textStatus, jqXHR) {
                                 if (!response.connected)
