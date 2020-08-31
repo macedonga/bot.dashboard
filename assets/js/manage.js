@@ -29,7 +29,7 @@ $(document).ready(function() {
             else {
                 if (response[0].lmgtfy === "true")
                     $('#lmgtfy').prop('checked', true);
-                if (response[0].wm.name) {
+                if (response[0].wm) {
                     $('#wg').prop('checked', true);
                     $("#wm-sel").removeClass("hide");
                 }
