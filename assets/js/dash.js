@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    $.get("https://dash.macedon.ga/api/discord.php", function(data) {
+    $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
         const ud = JSON.parse(data);
         $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
         $("#u-n").text("Hello " + ud.username + "!");
         var counter = 0;
-        $.get("https://dash.macedon.ga/api/discord.php?end=guilds", function(data) {
+        $.get("https://dash.macedon.ga/api/discord.php?end=users/@me/guilds", function(data) {
             const servers = JSON.parse(data);
             servers.forEach(server => {
                 if (server.owner) {
