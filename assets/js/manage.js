@@ -1,15 +1,18 @@
+var socket = io("https://api.macedon.ga");
+var retievedCH = false;
+
 var enlmgtfy = false;
+var wbchannel = [];
 
 $(document).ready(function() {
-    /*
-        $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
-            if (data === "Not logged in")
-                return location.href = "https://dash.macedon.ga/api/oauth.php";
-            const ud = JSON.parse(data);
-            $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
-            $("#u-n").text("Hello " + ud.username + "!");
-        });*/
-    var serverPost = { id: getUrlParameter("sid") };
+    $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
+        if (data === "Not logged in")
+            return location.href = "https://dash.macedon.ga/api/oauth.php";
+        const ud = JSON.parse(data);
+        $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
+        $("#u-n").text("Hello " + ud.username + "!");
+    });
+    var serverPost = { sid: getUrlParameter("sid") };
 
     $.ajax({
         url: "https://api.macedon.ga/mdbu/settings/get",
@@ -17,13 +20,15 @@ $(document).ready(function() {
         data: serverPost,
         async: false,
         success: function(response, textStatus, jqXHR) {
-            /*if (!response.success)
+            if (response.error)
                 if (response.error === "Not configured") {
-                    //alert("not configured");
+                    $('#lmgtfy').prop('checked', true);
                 } else
-                //alert("uh oh")
-                else
-                //alert("configured");*/
+                    alert("Unknown error occured");
+            else {
+                if (response[0].lmgtfy === "true")
+                    $('#lmgtfy').prop('checked', true);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
@@ -31,6 +36,19 @@ $(document).ready(function() {
             console.log(errorThrown);
         }
     });
+
+    socket.emit('get channels', getUrlParameter("sid"));
+    socket.on('return channels', function(ch) {
+        if (!retievedCH) {
+            Object.keys(ch).forEach(channel => {
+                var data = ch[channel];
+                var entry = $("<option></option>").text("#" + data.name.toLowerCase()).attr('id', channel);
+                $("#wb-c").append(entry);
+            });
+            retievedCH = true;
+        }
+    });
+
 });
 
 $("#lmgtfy").change(function() {
@@ -38,7 +56,18 @@ $("#lmgtfy").change(function() {
         enlmgtfy = true;
     else
         enlmgtfy = false;
-    SendSettings();
+});
+
+$("#wg").change(function() {
+    if (this.checked)
+        $("#wm-sel").removeClass("hide");
+    else
+        $("#wm-sel").addClass("hide");
+});
+
+$("#wb-c").change(function() {
+    console.log($("#wb-c option:selected").attr('id'));
+    wbchannel = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
 });
 
 function SendSettings() {
@@ -48,20 +77,18 @@ function SendSettings() {
         type: "POST",
         data: serverPost,
         async: false,
-        success: function(response, textStatus, jqXHR) {
-            console.log(response);
-        },
+        success: function(response, textStatus, jqXHR) {},
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
+            shake();
         }
     });
 }
 
 function GenerateJSON() {
-    return { sid: getUrlParameter("sid"), lmgtfy: enlmgtfy };
+    return { sid: getUrlParameter("sid"), lmgtfy: enlmgtfy, wm: wbchannel };
 }
+
+$("#save").on("click", function() { SendSettings() });
 
 
 function getUrlParameter(name) {
@@ -70,3 +97,10 @@ function getUrlParameter(name) {
     var results = regex.exec(location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
+
+function shake() {
+    document.body.classList.add("shake");
+    setTimeout(() => {
+        document.body.classList.remove("shake");
+    }, 820);
+}

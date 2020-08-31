@@ -116,10 +116,6 @@ button:active {
         color: rgb(0, 132, 255);
         border: solid 2px rgb(0, 132, 255);
     }
-    25% {
-        color: rgb(255, 251, 0);
-        border: solid 2px rgb(255, 251, 0);
-    }
     50% {
         color: rgb(0, 216, 0);
         border: solid 2px rgb(0, 216, 0);
@@ -193,9 +189,11 @@ button:active {
     margin-right: 10px;
 }
 
-.u-a:hover {
-    -webkit-box-shadow: 0px 0px 10px 0px rgb(30, 30, 30);
-    -moz-box-shadow: 0px 0px 10px 0px rgb(30, 30, 30);
-    -o-box-shadow: 0px 0px 10px 0px rgb(30, 30, 30);
-    box-shadow: 0px 0px 10px 0px rgb(30, 30, 30);
+.save {
+    border-radius: 50px;
+    position: absolute;
+    z-index: 2;
+    bottom: 10px;
+    cursor: pointer;
+    color: white;
 }

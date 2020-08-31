@@ -50,29 +50,41 @@
     transform: rotate(45deg);
 }
 
+.hide {
+    display: none;
+}
+
+.box select {
+    color: white;
+    padding: 5px;
+    animation: animated-text-border 5s linear infinite;
+    width: 250px;
+    border: none;
+    font-size: 15px;
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    margin-top: 10px;
+}
+
+.box select option {
+    padding: 20px;
+}
+
 @keyframes animated-text-border {
     0% {
-        color: rgb(0, 132, 255);
         border: solid 2px rgb(0, 132, 255);
         background-color: rgb(0, 132, 255);
     }
-    25% {
-        color: rgb(207, 204, 0);
-        border: solid 2px rgb(207, 204, 0);
-        background-color: rgb(207, 204, 0);
-    }
     50% {
-        color: rgb(0, 216, 0);
         border: solid 2px rgb(0, 216, 0);
         background-color: rgb(0, 216, 0);
     }
     75% {
-        color: rgb(255, 81, 0);
         border: solid 2px rgb(255, 81, 0);
         background-color: rgb(255, 81, 0);
     }
     100% {
-        color: rgb(0, 132, 255);
         border: solid 2px rgb(0, 132, 255);
         background-color: rgb(0, 132, 255);
     }
