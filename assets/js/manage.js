@@ -75,7 +75,11 @@ function SendSettings() {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
         wbchannel = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
-        var serverPost = { sid: getUrlParameter("sid"), lmgtfy: enlmgtfy, wm: wbchannel, tk: data };
+
+        if ($("#wg").is(':checked'))
+            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy, wm: wbchannel };
+        else
+            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy };
         $.ajax({
             url: "https://api.macedon.ga/mdbu/settings/set",
             type: "POST",
