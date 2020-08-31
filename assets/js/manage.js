@@ -5,13 +5,14 @@ var enlmgtfy = false;
 var wbchannel = [];
 
 $(document).ready(function() {
-    $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
-        if (data === "Not logged in")
-            return location.href = "https://dash.macedon.ga/api/oauth.php";
-        const ud = JSON.parse(data);
-        $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
-        $("#u-n").text("Hello " + ud.username + "!");
-    });
+    /*
+        $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
+            if (data === "Not logged in")
+                return location.href = "https://dash.macedon.ga/api/oauth.php";
+            const ud = JSON.parse(data);
+            $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
+            $("#u-n").text("Hello " + ud.username + "!");
+        });*/
     var serverPost = { sid: getUrlParameter("sid") };
 
     $.ajax({
@@ -28,6 +29,10 @@ $(document).ready(function() {
             else {
                 if (response[0].lmgtfy === "true")
                     $('#lmgtfy').prop('checked', true);
+                if (response[0].wm.name) {
+                    $('#wg').prop('checked', true);
+                    $("#wm-sel").removeClass("hide");
+                }
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -65,27 +70,23 @@ $("#wg").change(function() {
         $("#wm-sel").addClass("hide");
 });
 
-$("#wb-c").change(function() {
-    console.log($("#wb-c option:selected").attr('id'));
-    wbchannel = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
-});
-
 function SendSettings() {
-    var serverPost = GenerateJSON();
-    $.ajax({
-        url: "https://api.macedon.ga/mdbu/settings/set",
-        type: "POST",
-        data: serverPost,
-        async: false,
-        success: function(response, textStatus, jqXHR) {},
-        error: function(jqXHR, textStatus, errorThrown) {
-            shake();
-        }
+    $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
+        if (data === "Not logged in")
+            return location.href = "https://dash.macedon.ga/api/oauth.php";
+        wbchannel = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
+        var serverPost = { sid: getUrlParameter("sid"), lmgtfy: enlmgtfy, wm: wbchannel, tk = data };
+        $.ajax({
+            url: "https://api.macedon.ga/mdbu/settings/set",
+            type: "POST",
+            data: serverPost,
+            async: false,
+            success: function(response, textStatus, jqXHR) {},
+            error: function(jqXHR, textStatus, errorThrown) {
+                shake();
+            }
+        });
     });
-}
-
-function GenerateJSON() {
-    return { sid: getUrlParameter("sid"), lmgtfy: enlmgtfy, wm: wbchannel };
 }
 
 $("#save").on("click", function() { SendSettings() });
