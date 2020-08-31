@@ -2,7 +2,7 @@ var enlmgtfy = false;
 
 $(document).ready(function() {
     /*
-        $.get("https://dash.macedon.ga/api/discord.php", function(data) {
+        $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
             if (data === "Not logged in")
                 return location.href = "https://dash.macedon.ga/api/oauth.php";
             const ud = JSON.parse(data);
