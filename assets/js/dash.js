@@ -12,7 +12,7 @@ $(document).ready(function() {
                 if (server.owner) {
                     var serverBTN = $("<button></button>").text(server.name).addClass("server").attr('id', server.id);
                     serverBTN.on("click", function() {
-                        var serverPost = { id: server.id };
+                        var serverPost = { sid: server.id.toString() };
                         $.ajax({
                             url: "https://api.macedon.ga/mdbu/server/check",
                             type: "POST",
