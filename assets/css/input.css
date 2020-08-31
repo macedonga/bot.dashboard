@@ -1,0 +1,79 @@
+.cont {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.cont input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    animation: animated-text-border 5s linear infinite;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.cont input:checked~.checkmark:after {
+    display: block;
+}
+
+.cont .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid #ccc;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+@keyframes animated-text-border {
+    0% {
+        color: rgb(0, 132, 255);
+        border: solid 2px rgb(0, 132, 255);
+        background-color: rgb(0, 132, 255);
+    }
+    25% {
+        color: rgb(207, 204, 0);
+        border: solid 2px rgb(207, 204, 0);
+        background-color: rgb(207, 204, 0);
+    }
+    50% {
+        color: rgb(0, 216, 0);
+        border: solid 2px rgb(0, 216, 0);
+        background-color: rgb(0, 216, 0);
+    }
+    75% {
+        color: rgb(255, 81, 0);
+        border: solid 2px rgb(255, 81, 0);
+        background-color: rgb(255, 81, 0);
+    }
+    100% {
+        color: rgb(0, 132, 255);
+        border: solid 2px rgb(0, 132, 255);
+        background-color: rgb(0, 132, 255);
+    }
+}
