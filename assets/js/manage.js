@@ -77,9 +77,9 @@ function SendSettings() {
         wbchannel = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
 
         if ($("#wg").is(':checked'))
-            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy, wm: wbchannel };
+            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy, wm: wbchannel, tk: data };
         else
-            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy };
+            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy, tk: data };
         $.ajax({
             url: "https://api.macedon.ga/mdbu/settings/set",
             type: "POST",
