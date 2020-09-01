@@ -9,7 +9,6 @@
     <title>macedonga's tools</title>
 </head>
 
-
 <body>
     <div class="container">
         <div id="buttons">
@@ -21,30 +20,7 @@
             <img class="logo" src="https://cdn.macedon.ga/p.wb.big.png"><br>
         </div>
     </div>
-    <script>
-        $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
-            if (data != "Not logged in") {
-                $("#login").val("Go to the dashboard");
-                $("#login").on("click", function() {
-                    $("#buttons").fadeOut(500, function() {
-                        $(".loader").fadeIn(500);
-                    });
-                    setTimeout(function() {
-                        location.href = "https://dash.macedon.ga/dash/";
-                    }, 500);
-                });
-            } else {
-                $("#login").on("click", function() {
-                    $("#buttons").fadeOut(500, function() {
-                        $(".loader").fadeIn(500);
-                    });
-                    setTimeout(function() {
-                        location.href = "https://dash.macedon.ga/api/oauth.php";
-                    }, 500);
-                });
-            }
-        });
-    </script>
+    <script src="assets/js/index.js"></script>
 </body>
 
 </html>

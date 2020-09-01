@@ -3,46 +3,46 @@ var retievedCH = false;
 
 var enlmgtfy = false;
 var wbchannel = [];
-
+var u;
 $(document).ready(function() {
-    /*
-        $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
-            if (data === "Not logged in")
-                return location.href = "https://dash.macedon.ga/api/oauth.php";
-            const ud = JSON.parse(data);
-            $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
-            $("#u-n").text("Hello " + ud.username + "!");
-        });*/
+    socket.emit('get channels', getUrlParameter("sid"));
+    $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
+        if (data === "Not logged in")
+            return location.href = "https://dash.macedon.ga/api/oauth.php";
+        const ud = JSON.parse(data);
+        $(".u-a").attr('src', "https://cdn.discordapp.com/avatars/" + ud.id + "/" + ud.avatar + ".png")
+        $("#u-n").text("Hello " + ud.username + "!");
+        u = ud;
+    });
     var serverPost = { sid: getUrlParameter("sid") };
-
     $.ajax({
         url: "https://api.macedon.ga/mdbu/settings/get",
         type: "POST",
         data: serverPost,
         async: false,
         success: function(response, textStatus, jqXHR) {
-            if (response.error)
-                if (response.error === "Not configured") {
-                    $('#lmgtfy').prop('checked', true);
-                } else
-                    alert("Unknown error occured");
-            else {
-                if (response[0].lmgtfy === "true")
-                    $('#lmgtfy').prop('checked', true);
-                if (response[0].wm) {
-                    $('#wg').prop('checked', true);
-                    $("#wm-sel").removeClass("hide");
-                }
-            }
+            setTimeout(function() {
+                if (response.error)
+                    if (response.error != "Not configured")
+                        alert("Unknown error occured");
+                    else {
+                        if (response[0].uid != u.id)
+                            return location.href = "https://dash.macedon.ga/";
+                        if (response[0].lmgtfy === "true")
+                            $('#lmgtfy').prop('checked', true);
+                        if (response[0].wm) {
+                            $('#wg').prop('checked', true);
+                            $("#wm-sel").removeClass("hide");
+                            $("#wb-c").val(response[0].wm.id);
+                        }
+                    }
+            }, 500);
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
+            return location.href = "https://dash.macedon.ga/";
         }
     });
-
-    socket.emit('get channels', getUrlParameter("sid"));
     socket.on('return channels', function(ch) {
         if (!retievedCH) {
             Object.keys(ch).forEach(channel => {
@@ -53,7 +53,6 @@ $(document).ready(function() {
             retievedCH = true;
         }
     });
-
 });
 
 $("#lmgtfy").change(function() {
