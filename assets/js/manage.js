@@ -9,12 +9,6 @@ $(document).ready(function() {
     if (getUrlParameter("sid") === "")
         return location.href = "https://dash.macedon.ga/dash/";
     socket.emit('get channels', getUrlParameter("sid"));
-    $.get("https://dash.macedon.ga/api/discord.php?end=guilds/" + getUrlParameter("sid"), function(data) {
-        if (data === "Not logged in")
-            return location.href = "https://dash.macedon.ga/api/oauth.php";
-        const sd = JSON.parse(data);
-        $("#u-n").text("Now editing " + sd.name + " settings.");
-    });
     $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
