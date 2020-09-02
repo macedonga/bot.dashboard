@@ -23,7 +23,7 @@ $(document).ready(function() {
                                     alert("The bot isn't in the server you selected.\nInvite it first and then you can select this server.")
                                 else
                                     $(".content").fadeOut(500, function() {
-                                        $(".header").fadeIn(500, function() {
+                                        $(".header").fadeOut(500, function() {
                                             $(".loader").fadeIn(500, function() {
                                                 location.href = "https://dash.macedon.ga/dash/manage.html?sid=" + server.id;
                                             });

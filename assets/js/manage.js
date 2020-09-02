@@ -7,11 +7,11 @@ var u;
 $(document).ready(function() {
     if (getUrlParameter("sid") === "")
         return location.href = "https://dash.macedon.ga/dash/";
-    /*$.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
+    $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
         u = JSON.parse(data);
-    });*/
+    });
     var serverPost = { sid: getUrlParameter("sid") };
     $.ajax({
         url: "https://api.macedon.ga/mdbu/settings/get",
@@ -23,8 +23,8 @@ $(document).ready(function() {
                 if (response.error != "Not configured")
                     return location.href = "https://dash.macedon.ga/error.html";
             } else {
-                /*if (response[0].uid != u.id)
-                return location.href = "https://dash.macedon.ga/";*/
+                if (response[0].uid != u.id)
+                    return location.href = "https://dash.macedon.ga/";
                 if (response[0].lmgtfy === "true")
                     $('#lmgtfy').prop('checked', true);
                 configData = response;
@@ -63,6 +63,12 @@ $(document).ready(function() {
             $("#listing-c").val(response[0].listing.id);
         }
     });
+    setTimeout(function() {
+        $(".loader").fadeOut(500, function() {
+            $(".header").fadeIn(500);
+            $(".content").fadeIn(500);
+        });
+    }, 1000)
 });
 
 $("#wg").change(function() {
@@ -103,6 +109,12 @@ function SendSettings() {
             success: function(response, textStatus, jqXHR) {
                 if (!response.success)
                     return location.href = "https://dash.macedon.ga/error.html";
+                else
+                    $(".saveok").fadeIn(500, function() {
+                        setTimeout(function() {
+                            $(".saveok").fadeOut(500);
+                        }, 2500);
+                    });
             },
             error: function(jqXHR, textStatus, errorThrown) { return location.href = "https://dash.macedon.ga/error.html"; }
         });

@@ -206,3 +206,13 @@ button:active {
     cursor: pointer;
     color: white;
 }
+
+.saveok {
+    border-radius: 50px;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    float: right;
+    color: rgb(0, 216, 0);
+    display: none;
+}
