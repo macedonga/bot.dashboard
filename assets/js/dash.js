@@ -22,18 +22,26 @@ $(document).ready(function() {
                                 if (!response.connected)
                                     alert("The bot isn't in the server you selected.\nInvite it first and then you can select this server.")
                                 else
-                                    location.href = "https://dash.macedon.ga/dash/manage.html?sid=" + server.id;
+                                    $(".content").fadeOut(500, function() {
+                                        $(".header").fadeIn(500, function() {
+                                            $(".loader").fadeIn(500, function() {
+                                                location.href = "https://dash.macedon.ga/dash/manage.html?sid=" + server.id;
+                                            });
+                                        });
+                                    });
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                console.log(jqXHR);
-                                console.log(textStatus);
-                                console.log(errorThrown);
+                                return location.href = "https://dash.macedon.ga/error.html";
                             }
                         });
                     });
                     $('.content').append(serverBTN);
                     counter = counter + 1;
                 }
+            });
+            $(".loader").fadeOut(500, function() {
+                $(".content").fadeIn(500);
+                $(".header").fadeIn(500);
             });
         });
     });
