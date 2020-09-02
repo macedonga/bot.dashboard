@@ -39,10 +39,12 @@ $(document).ready(function() {
                     counter = counter + 1;
                 }
             });
-            $(".loader").fadeOut(250, function() {
-                $(".header").fadeIn(500);
-                $(".container").fadeIn(500);
-            });
+            setTimeout(function() {
+                $(".loader").fadeOut(500, function() {
+                    $(".header").fadeIn(500);
+                    $(".content").fadeIn(500);
+                });
+            }, 500)
         });
     });
 });
