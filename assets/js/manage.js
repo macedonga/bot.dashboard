@@ -1,19 +1,17 @@
 var socket = io("https://api.macedon.ga");
 var retievedCH = false;
 
-var enlmgtfy = false;
-var wbchannel = [];
+var configData;
 var u;
 
 $(document).ready(function() {
     if (getUrlParameter("sid") === "")
         return location.href = "https://dash.macedon.ga/dash/";
-    socket.emit('get channels', getUrlParameter("sid"));
-    $.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
+    /*$.get("https://dash.macedon.ga/api/discord.php?end=users/@me", function(data) {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
         u = JSON.parse(data);
-    });
+    });*/
     var serverPost = { sid: getUrlParameter("sid") };
     $.ajax({
         url: "https://api.macedon.ga/mdbu/settings/get",
@@ -21,23 +19,18 @@ $(document).ready(function() {
         data: serverPost,
         async: false,
         success: function(response, textStatus, jqXHR) {
-            setTimeout(function() {
-                if (response.error)
-                    if (response.error != "Not configured")
-                        return location.href = "https://dash.macedon.ga/error.html";
-                    else {
-                        if (response[0].uid != u.id)
-                            return location.href = "https://dash.macedon.ga/";
-                        if (response[0].lmgtfy === "true")
-                            $('#lmgtfy').prop('checked', true);
-                        if (response[0].wm) {
-                            $('#wg').prop('checked', true);
-                            $("#wm-sel").removeClass("hide");
-                            $("#wb-c").val(response[0].wm.id);
-                        }
-                    }
-            }, 500);
-
+            if (response.error) {
+                if (response.error != "Not configured")
+                    return location.href = "https://dash.macedon.ga/error.html";
+            } else {
+                /*if (response[0].uid != u.id)
+                return location.href = "https://dash.macedon.ga/";*/
+                if (response[0].lmgtfy === "true")
+                    $('#lmgtfy').prop('checked', true);
+                configData = response;
+                socket.emit('get channels', getUrlParameter("sid"));
+                socket.emit('get categories', getUrlParameter("sid"));
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             return location.href = "https://dash.macedon.ga/";
@@ -45,21 +38,31 @@ $(document).ready(function() {
     });
     socket.on('return channels', function(ch) {
         if (!retievedCH) {
+            retievedCH = true;
             Object.keys(ch).forEach(channel => {
                 var data = ch[channel];
                 var entry = $("<option></option>").text("#" + data.name.toLowerCase()).attr('id', channel);
                 $("#wb-c").append(entry);
             });
-            retievedCH = true;
+            if (configData[0].wm) {
+                $('#wg').prop('checked', true);
+                $("#wm-sel").removeClass("hide");
+                $("#wb-c").val(configData[0].wm.name);
+            }
         }
     });
-});
-
-$("#lmgtfy").change(function() {
-    if (this.checked)
-        enlmgtfy = true;
-    else
-        enlmgtfy = false;
+    socket.on('return categories', function(ch) {
+        Object.keys(ch).forEach(channel => {
+            var data = ch[channel];
+            var entry = $("<option></option>").text("#" + data.name.toLowerCase()).attr('id', channel);
+            $("#listing-c").append(entry);
+        });
+        if (configData[0].listing) {
+            $('#lis').prop('checked', true);
+            $("#listing-sel").removeClass("hide");
+            $("#listing-c").val(response[0].listing.id);
+        }
+    });
 });
 
 $("#wg").change(function() {
@@ -69,28 +72,40 @@ $("#wg").change(function() {
         $("#wm-sel").addClass("hide");
 });
 
+$("#lis").change(function() {
+    if (this.checked)
+        $("#lis-sel").removeClass("hide");
+    else
+        $("#lis-sel").addClass("hide");
+});
+
 function SendSettings() {
     $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
-        wbchannel = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
 
+
+        // Settings generation
+        var settings = new Object();
+        var data = "";
+        settings["sid"] = getUrlParameter("sid");
+        settings["lmgtfy"] = $("#lmgtfy").is(':checked');
+        settings["tk"] = data;
         if ($("#wg").is(':checked'))
-            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy, wm: wbchannel, tk: data };
-        else
-            var serverPost = { sid: getUrlParameter("sid").toString(), lmgtfy: enlmgtfy, tk: data };
+            settings["wm"] = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
+        if ($("#lis").is(':checked'))
+            settings["listing"] = { id: $("#listing-c option:selected").attr('id'), name: $("#listing-c option:selected").text() };
+
         $.ajax({
             url: "https://api.macedon.ga/mdbu/settings/set",
             type: "POST",
-            data: serverPost,
+            data: settings,
             async: false,
             success: function(response, textStatus, jqXHR) {
                 if (!response.success)
                     return location.href = "https://dash.macedon.ga/error.html";
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                shake();
-            }
+            error: function(jqXHR, textStatus, errorThrown) { return location.href = "https://dash.macedon.ga/error.html"; }
         });
     });
 }
