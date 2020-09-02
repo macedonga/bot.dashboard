@@ -82,7 +82,7 @@ button:hover {
 }
 
 .loader {
-    display: none;
+    display: block;
 }
 
 button:active {
@@ -172,4 +172,8 @@ input {
     60% {
         transform: translate3d(4px, 0, 0);
     }
+}
+
+.hide {
+    display: none;
 }

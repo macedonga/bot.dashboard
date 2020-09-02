@@ -21,5 +21,16 @@ $(document).ready(function() {
                 }, 500);
             });
         }
+        $(".loader").fadeOut(500, function() {
+            $("#buttons").fadeIn(500);
+        });
+        $("#invite").on("click", function() {
+            $("#buttons").fadeOut(500, function() {
+                $(".loader").fadeIn(500);
+            });
+            setTimeout(function() {
+                location.href = "https://discord.com/oauth2/authorize?client_id=747489983601836042&permissions=8&scope=bot";
+            }, 500);
+        });
     });
 });
