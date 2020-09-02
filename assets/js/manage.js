@@ -11,31 +11,32 @@ $(document).ready(function() {
         if (data === "Not logged in")
             return location.href = "https://dash.macedon.ga/api/oauth.php";
         u = JSON.parse(data);
-    });
-    var serverPost = { sid: getUrlParameter("sid") };
-    $.ajax({
-        url: "https://api.macedon.ga/mdbu/settings/get",
-        type: "POST",
-        data: serverPost,
-        async: false,
-        success: function(response, textStatus, jqXHR) {
-            if (response.error) {
-                if (response.error != "Not configured")
-                    return location.href = "https://dash.macedon.ga/error.html";
-            } else {
-                if (response[0].uid != u.id)
-                    return location.href = "https://dash.macedon.ga/";
-                if (response[0].lmgtfy === "true")
-                    $('#lmgtfy').prop('checked', true);
-                configData = response;
-                socket.emit('get channels', getUrlParameter("sid"));
-                socket.emit('get categories', getUrlParameter("sid"));
+        var serverPost = { sid: getUrlParameter("sid") };
+        $.ajax({
+            url: "https://api.macedon.ga/mdbu/settings/get",
+            type: "POST",
+            data: serverPost,
+            async: false,
+            success: function(response, textStatus, jqXHR) {
+                if (response.error) {
+                    if (response.error != "Not configured")
+                        return location.href = "https://dash.macedon.ga/error.html";
+                } else {
+                    if (response[0].uid != u.id)
+                        return location.href = "https://dash.macedon.ga/";
+                    if (response[0].lmgtfy === "true")
+                        $('#lmgtfy').prop('checked', true);
+                    configData = response;
+                    socket.emit('get channels', getUrlParameter("sid"));
+                    socket.emit('get categories', getUrlParameter("sid"));
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                return location.href = "https://dash.macedon.ga/";
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            return location.href = "https://dash.macedon.ga/";
-        }
+        });
     });
+
     socket.on('return channels', function(ch) {
         if (!retievedCH) {
             retievedCH = true;
