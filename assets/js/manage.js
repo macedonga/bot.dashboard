@@ -87,7 +87,6 @@ function SendSettings() {
 
         // Settings generation
         var settings = new Object();
-        var data = "";
         settings["sid"] = getUrlParameter("sid");
         settings["lmgtfy"] = $("#lmgtfy").is(':checked');
         settings["tk"] = data;
