@@ -39,9 +39,9 @@ $(document).ready(function() {
                     counter = counter + 1;
                 }
             });
-            $(".loader").fadeOut(500, function() {
-                $(".content").fadeIn(500);
+            $(".loader").fadeOut(250, function() {
                 $(".header").fadeIn(500);
+                $(".container").fadeIn(500);
             });
         });
     });
