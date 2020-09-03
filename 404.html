@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>macedonga's tools</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="content" style="display: none;">
+            <h3 class="animated">404</h3>
+            <button id="home">Go back</button>
+        </div>
+        <div class="loader">
+            <img class="logo" src="https://cdn.macedon.ga/p.wb.big.png"><br>
+        </div>
+    </div>
+    <script src="assets/js/main.js"></script>
+    <script>
+        setTimeout(function() {
+            $(".loader").fadeOut(1000, function() {
+                $("#content").fadeIn(500, function() {
+                    shake();
+                });
+            });
+        }, 500);
+        $("#home").on("click", function() {
+            $("#content").fadeOut(500, function() {
+                $(".loader").fadeIn(500);
+            });
+            setTimeout(function() {
+                location.href = "https://dash.macedon.ga/";
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>
