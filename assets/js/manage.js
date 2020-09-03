@@ -50,6 +50,11 @@ $(document).ready(function() {
                 $("#wm-sel").removeClass("hide");
                 $("#wb-c").val(configData[0].wm.name);
             }
+            if (configData[0].review) {
+                $('#rev').prop('checked', true);
+                $("#rev-sel").removeClass("hide");
+                $("#rev-c").val(configData[0].review.name);
+            }
         }
     });
     socket.on('return categories', function(ch) {
@@ -86,6 +91,13 @@ $("#lis").change(function() {
         $("#lis-sel").addClass("hide");
 });
 
+$("#rev").change(function() {
+    if (this.checked)
+        $("#rev-sel").removeClass("hide");
+    else
+        $("#rev-sel").addClass("hide");
+});
+
 function SendSettings() {
     $.get("https://dash.macedon.ga/api/get_token.php", function(data) {
         if (data === "Not logged in")
@@ -101,6 +113,8 @@ function SendSettings() {
             settings["wm"] = { id: $("#wb-c option:selected").attr('id'), name: $("#wb-c option:selected").text() };
         if ($("#lis").is(':checked'))
             settings["listing"] = { id: $("#listing-c option:selected").attr('id'), name: $("#listing-c option:selected").text() };
+        if ($("#rev").is(':checked'))
+            settings["review"] = { id: $("#rev-c option:selected").attr('id'), name: $("#rev-c option:selected").text() };
 
         $.ajax({
             url: "https://api.macedon.ga/mdbu/settings/set",
