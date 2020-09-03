@@ -61,7 +61,7 @@ $(document).ready(function() {
         if (configData[0].listing) {
             $('#lis').prop('checked', true);
             $("#listing-sel").removeClass("hide");
-            $("#listing-c").val(response[0].listing.id);
+            $("#listing-c").val(configData[0].listing.id);
         }
     });
     setTimeout(function() {
