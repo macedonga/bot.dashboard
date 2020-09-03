@@ -44,9 +44,8 @@ $(document).ready(function() {
                 var data = ch[channel];
                 var entry = $("<option></option>").text("#" + data.name.toLowerCase()).attr('id', channel);
                 $("#wb-c").append(entry);
-                setTimeout(function() {
-                    $("#rev-c").append(entry);
-                }, 200);
+                var entry = $("<option></option>").text("#" + data.name.toLowerCase()).attr('id', channel);
+                $("#rev-c").append(entry);
             });
             if (configData[0].wm) {
                 $('#wg').prop('checked', true);
